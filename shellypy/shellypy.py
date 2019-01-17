@@ -28,12 +28,37 @@ class Shelly:
             raise error.NetworkError
         
         if (r.status_code == 200):
-            return
+            return const.STATUS_OK
         else:
-            raise DeviceNotReady
+            return const.STATUS_DEVICENOTREADY
         
     
     def get_relay_status(self):
-        """Get the latest data from Shelly Device"""
-        r = requests.get(self.device_address + "/relay/" + self.device_number)
-        return r.json()
+        """Get the latest data from Shelly Relay"""
+        from requests.exceptions import RequestException
+        try:
+            r = requests.get(self.device_address + "/relay/" + self.device_number).json()
+        except RequestException as err:
+            raise error.RelayStatusError
+
+        if (r["is_valid"] == True):
+            return r["ison"]
+        else:
+            raise error.RelayIsNotValid
+            
+    def turn_on_relay(self):
+        """Turn on a Shelly Relay"""
+        self.set_relay_status("on")
+        
+    def turn_off_relay(self):
+        """Turn off a Shelly Relay"""
+        self.set_relay_status("off")
+            
+    def set_relay_status(self, is_on):
+        """Set the status of a Shelly Relay"""        
+        from requests.exceptions import RequestException
+        try:
+            r = requests.post(self.device_address + "/relay/" + self.device_number + "?turn=" + is_on)
+        except RequestException as err:
+            raise error.SetRelayError
+        

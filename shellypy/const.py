@@ -1,3 +1,6 @@
 
 MODE_RELAY = "relay"
 MODE_ROLLER = "roller"
+
+STATUS_OK = 0
+STATUS_DEVICENOTREADY = -1
