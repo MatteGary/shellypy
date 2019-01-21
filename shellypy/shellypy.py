@@ -3,7 +3,7 @@ import requests
 import const
 import error
 
-class Shelly:
+class ShellyRelay:
     """Represents a single Shelly Relay device"""
     
     def __init__(self, address, device):
@@ -33,7 +33,7 @@ class Shelly:
             return const.STATUS_DEVICENOTREADY
         
     
-    def get_relay_status(self):
+    def get_status(self):
         """Get the latest data from Shelly Relay"""
         from requests.exceptions import RequestException
         try:
@@ -46,19 +46,18 @@ class Shelly:
         else:
             raise error.RelayIsNotValid
             
-    def turn_on_relay(self):
+    def turn_on(self):
         """Turn on a Shelly Relay"""
-        self.set_relay_status("on")
+        self.set_relay_status(const.ON)
         
-    def turn_off_relay(self):
+    def turn_off(self):
         """Turn off a Shelly Relay"""
-        self.set_relay_status("off")
+        self.set_relay_status(const.OFF)
             
-    def set_relay_status(self, is_on):
+    def set_status(self, is_on):
         """Set the status of a Shelly Relay"""        
         from requests.exceptions import RequestException
         try:
             r = requests.post(self.device_address + "/relay/" + self.device_number + "?turn=" + is_on)
         except RequestException as err:
-            raise error.SetRelayError
-        
+            raise error.SetRelayError           
