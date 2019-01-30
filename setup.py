@@ -7,10 +7,10 @@ setuptools.setup(
     name="y",
     version="0.0.1",
     author="MatteGary",
-    description="Python interface with Shelly Relay IOT Device.",
+    description="Python interface for Shelly IOT Device.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://gitlab.com/MatteGary/shellypy",
+    url="https://github.com/MatteGary/shellypy",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
