@@ -10,3 +10,15 @@ It allows controlling a device, and monitoring the state and power consumption o
 Device | From Version | Read Status | Controlling | Power Monitoring | Notes
 -------|--------------|-------------|-------------|------------------|------
 Shelly 2 | v0.0.1 | V | V | X | 
+
+## Installing ##
+To install:
+```
+pip install shellypy
+```
+
+## Documentation ##
+Work in progress.
+
+## Contributions ##
+Contributions are welcome. Please fork the project on GitHub and raise an issue and merge request there.
