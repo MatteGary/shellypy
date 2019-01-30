@@ -3,22 +3,18 @@ import requests
 import const
 import error
 
-class ShellyRelay:
-    """Represents a single Shelly Relay device"""
+class Shelly:
+    """Represents a Shelly device base class"""
     
-    def __init__(self, address, device):
-        """Initialize Shelly Device class"""
+    def __init__(self, address):
+        """Initialize Shelly base class"""
         
         if ("http://" in address):
             self.device_address = address
         else:
             self.device_address = "http://" + address
             
-        self.device_number = str(device)
-        self.mode = const.MODE_RELAY
-        
-        self.check_status()
-        
+            
     def check_status(self):
         """Check the status of the device"""
         from requests.exceptions import RequestException
@@ -31,7 +27,20 @@ class ShellyRelay:
             return const.STATUS_OK
         else:
             return const.STATUS_DEVICENOTREADY
+            
+
+class ShellyRelay(Shelly):
+    """Represents a single Shelly Relay device"""
+    
+    def __init__(self, address, device):
+        """Initialize Shelly Device class"""
         
+        Shelly.__init__(self, address)
+            
+        self.device_number = str(device)
+        self.mode = const.MODE_RELAY
+        
+        self.check_status()
     
     def get_status(self):
         """Get the latest data from Shelly Relay"""
