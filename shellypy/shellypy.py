@@ -1,7 +1,7 @@
 
-import requests
-import const
-import error
+import requests 
+from .const import (MODE_RELAY, MODE_ROLLER, STATUS_OK, STATUS_DEVICENOTREADY, ON, OFF)
+from .error import (ShellyError,DeviceNotReady,NetworkError,RelayStatusError,RelayIsNotValid,SetRelayError)
 
 class Shelly:
     """Represents a Shelly device base class"""
@@ -21,12 +21,12 @@ class Shelly:
         try:
             r  = requests.get(self.device_address + "/status")
         except RequestException as err:
-            raise error.NetworkError
+            raise NetworkError
         
         if (r.status_code == 200):
-            return const.STATUS_OK
+            return STATUS_OK
         else:
-            return const.STATUS_DEVICENOTREADY
+            return STATUS_DEVICENOTREADY
             
 
 class ShellyRelay(Shelly):
@@ -38,7 +38,7 @@ class ShellyRelay(Shelly):
         Shelly.__init__(self, address)
             
         self.device_number = str(device)
-        self.mode = const.MODE_RELAY
+        self.mode = MODE_RELAY
         
         self.check_status()
     
@@ -48,20 +48,20 @@ class ShellyRelay(Shelly):
         try:
             r = requests.get(self.device_address + "/relay/" + self.device_number).json()
         except RequestException as err:
-            raise error.RelayStatusError
+            raise RelayStatusError
 
         if (r["is_valid"] == True):
             return r["ison"]
         else:
-            raise error.RelayIsNotValid
+            raise RelayIsNotValid
             
     def turn_on(self):
         """Turn on a Shelly Relay"""
-        self.set_relay_status(const.ON)
+        self.set_relay_status(ON)
         
     def turn_off(self):
         """Turn off a Shelly Relay"""
-        self.set_relay_status(const.OFF)
+        self.set_relay_status(OFF)
             
     def set_status(self, is_on):
         """Set the status of a Shelly Relay"""        
@@ -69,4 +69,4 @@ class ShellyRelay(Shelly):
         try:
             r = requests.post(self.device_address + "/relay/" + self.device_number + "?turn=" + is_on)
         except RequestException as err:
-            raise error.SetRelayError           
+            raise SetRelayError           
