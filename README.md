@@ -9,4 +9,4 @@ It allows controlling a device, and monitoring the state and power consumption o
 ## Supported device ##
 Device | From Version | Read Status | Controlling | Power Monitoring | Notes
 -------|--------------|-------------|-------------|------------------|------
-Shelly 2 | v0.0.1 | :heavy_check_mark: | :heavy_check_mark: | :x: | 
+Shelly 2 | v0.0.1 | V | V | X | 
