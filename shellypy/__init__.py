@@ -1,1 +1,1 @@
-name = "shellypi"
+name = "shellypy"
